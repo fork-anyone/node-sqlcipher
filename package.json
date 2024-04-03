@@ -1,22 +1,22 @@
 {
-  "name": "@journeyapps/sqlcipher",
-  "description": "Asynchronous, non-blocking SQLCipher bindings",
+  "name": "@fork-anyone/sqlcipher",
   "version": "5.3.1",
+  "description": "Asynchronous, non-blocking SQLCipher bindings",
+  "keywords": [
+    "sql",
+    "sqlite",
+    "sqlite3",
+    "database"
+  ],
   "homepage": "http://github.com/journeyapps/node-sqlcipher",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/journeyapps/node-sqlcipher.git"
+  },
+  "license": "BSD-3-Clause",
   "author": {
     "name": "JourneyApps",
     "url": "https://journeyapps.com/"
-  },
-  "binary": {
-    "module_name": "node_sqlite3",
-    "module_path": "./lib/binding/napi-v{napi_build_version}-{platform}-{arch}",
-    "host": "https://journeyapps-node-binary.s3.amazonaws.com",
-    "remote_path": "./{name}/v{version}/{toolset}/",
-    "package_name": "napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
-    "napi_versions": [
-      3,
-      6
-    ]
   },
   "contributors": [
     "Konstantin Käfer <mail@kkaefer.com>",
@@ -36,9 +36,31 @@
     "Mithgol",
     "Ben Noordhuis <ben@strongloop.com>"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/journeyapps/node-sqlcipher.git"
+  "main": "./lib/sqlite3",
+  "types": "./lib/sqlite3.d.ts",
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.ts",
+    "sqlite3.js",
+    "binding.gyp",
+    "deps"
+  ],
+  "binary": {
+    "module_name": "node_sqlite3",
+    "module_path": "./lib/binding/napi-v{napi_build_version}-{platform}-{arch}",
+    "remote_path": "./{name}/v{version}/{toolset}/",
+    "package_name": "napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
+    "host": "https://journeyapps-node-binary.s3.amazonaws.com",
+    "napi_versions": [
+      3,
+      6
+    ]
+  },
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "pack": "node-pre-gyp package",
+    "pretest": "node test/support/createdb.js",
+    "test": "mocha -R spec --timeout 480000"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.0",
@@ -53,25 +75,5 @@
     "mocha": "^5.2.0",
     "node-abi": "^2.19.3",
     "node-gyp": "^6.1.0"
-  },
-  "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
-    "pretest": "node test/support/createdb.js",
-    "test": "mocha -R spec --timeout 480000",
-    "pack": "node-pre-gyp package"
-  },
-  "license": "BSD-3-Clause",
-  "keywords": [
-    "sql",
-    "sqlite",
-    "sqlite3",
-    "database"
-  ],
-  "main": "./lib/sqlite3",
-  "types": "./lib/sqlite3.d.ts",
-  "files": [
-    "lib/**/*.js",
-    "lib/**/*.ts",
-    "sqlite3.js"
-  ]
+  }
 }
