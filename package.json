@@ -59,6 +59,7 @@
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
     "pack": "node-pre-gyp package",
+    "publish_to_sfnpm": "npm publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
     "pretest": "node test/support/createdb.js",
     "test": "mocha -R spec --timeout 480000"
   },
