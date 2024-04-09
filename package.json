@@ -48,7 +48,7 @@
   "binary": {
     "module_name": "node_sqlite3",
     "module_path": "./lib/binding/napi-v{napi_build_version}-{platform}-{arch}",
-    "remote_path": "./{name}/v{version}/{toolset}/",
+    "remote_path": "./@journeyapps/sqlcipher/v{version}/{toolset}/",
     "package_name": "napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
     "host": "https://journeyapps-node-binary.s3.amazonaws.com",
     "napi_versions": [
