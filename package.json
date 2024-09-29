@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/sqlcipher",
-  "version": "5.3.3",
+  "version": "5.3.7",
   "description": "Asynchronous, non-blocking SQLCipher bindings",
   "keywords": [
     "sql",
@@ -43,7 +43,9 @@
     "lib/**/*.ts",
     "sqlite3.js",
     "binding.gyp",
-    "deps"
+    "deps",
+    ".nvmrc",
+    "src"
   ],
   "binary": {
     "module_name": "node_sqlite3",
@@ -64,7 +66,7 @@
     "test": "mocha -R spec --timeout 480000"
   },
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.0",
+    "@mapbox/node-pre-gyp": "^1.0.11",
     "node-addon-api": "^3.0.0"
   },
   "devDependencies": {
@@ -76,5 +78,8 @@
     "mocha": "^5.2.0",
     "node-abi": "^2.19.3",
     "node-gyp": "^6.1.0"
+  },
+  "volta": {
+    "node": "18.20.4"
   }
 }
