@@ -63,7 +63,10 @@
     "pack": "node-pre-gyp package",
     "publish_to_sfnpm": "npm publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
     "pretest": "node test/support/createdb.js",
-    "test": "mocha -R spec --timeout 480000"
+    "test": "mocha -R spec --timeout 480000",
+    "build:node": "node-pre-gyp rebuild --target=16.17.1 --target_arch=x64",
+		"build:electron:x64": "node-pre-gyp rebuild --target=16.17.1 --target_arch=x64 --runtime=electron --dist-url=https://npm.taobao.org/mirrors/electron",
+		"build:electron:ia32": "electron-rebuild rebuild --target=16.17.1 --target_arch=ia32 --runtime=electron --dist-url=https://npm.taobao.org/mirrors/electron"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.11",
@@ -78,8 +81,5 @@
     "mocha": "^5.2.0",
     "node-abi": "^2.19.3",
     "node-gyp": "^6.1.0"
-  },
-  "volta": {
-    "node": "16.17.1"
   }
 }
