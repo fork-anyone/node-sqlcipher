@@ -9,9 +9,19 @@
       "target_name": "<(module_name)",
       "cflags!": [ "-fno-exceptions" ],
       "cflags_cc!": [ "-fno-exceptions" ],
-      "xcode_settings": { "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+      'defines!': [
+				'-std=c++11'
+			],
+      "xcode_settings": { 
+        'ARCHS': ['x86_64'],
+        "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
         "CLANG_CXX_LIBRARY": "libc++",
         "MACOSX_DEPLOYMENT_TARGET": "10.7",
+        'EXCUTABLE_EXTENSION': 'node',
+        'OTHER_CFLAGS': [
+					'-ObjC++',
+					# '-std=c++14'
+				]
       },
       "msvs_settings": {
         "VCCLCompilerTool": { "ExceptionHandling": 1 },
@@ -49,7 +59,10 @@
         "src/node_sqlite3.cc",
         "src/statement.cc"
       ],
-      "defines": [ "NAPI_VERSION=<(napi_build_version)", "NAPI_DISABLE_CPP_EXCEPTIONS=1" ]
+      "defines": [ 
+        "NAPI_VERSION=<(napi_build_version)",
+        "NAPI_DISABLE_CPP_EXCEPTIONS=1" 
+      ]
     },
     {
       "target_name": "action_after_build",

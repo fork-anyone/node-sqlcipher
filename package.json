@@ -1,6 +1,6 @@
 {
   "name": "@fork-anyone/sqlcipher",
-  "version": "5.3.7",
+  "version": "5.3.8",
   "description": "Asynchronous, non-blocking SQLCipher bindings",
   "keywords": [
     "sql",
@@ -80,6 +80,6 @@
     "node-gyp": "^6.1.0"
   },
   "volta": {
-    "node": "18.20.4"
+    "node": "16.17.1"
   }
 }
