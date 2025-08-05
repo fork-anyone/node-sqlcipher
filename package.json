@@ -47,28 +47,18 @@
     ".nvmrc",
     "src"
   ],
-  "binary": {
-    "module_name": "node_sqlite3",
-    "module_path": "./lib/binding/napi-v{napi_build_version}-{platform}-{arch}",
-    "remote_path": "./@journeyapps/sqlcipher/v5.3.1/{toolset}/",
-    "package_name": "napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
-    "host": "https://journeyapps-node-binary.s3.amazonaws.com",
-    "napi_versions": [
-      3,
-      6
-    ]
-  },
   "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
-    "pack": "node-pre-gyp package",
+    "build": "node-gyp rebuild --target=22.3.13 --dist-url https://npm.taobao.org/mirrors/electron",
+    "build:ia32": "node-gyp rebuild --target=22.3.13 -target_arch=ia32 --dist-url https://npm.taobao.org/mirrors/electron",
+    "build:x64": "node-gyp rebuild --target=22.3.13 -target_arch=x64 --dist-url https://npm.taobao.org/mirrors/electron",
+    "build:node": "node-gyp rebuild --target=16.17.1 --target_arch=x64",
+    "configure": "node-gyp configure --target=22.3.13 --dist-url https://npm.taobao.org/mirrors/electron --python /usr/local/bin/python3 -- -f xcode",
     "publish_to_sfnpm": "npm publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
     "pretest": "node test/support/createdb.js",
-    "test": "mocha -R spec --timeout 480000",
-    "build:node": "node-pre-gyp rebuild --target=16.17.1 --target_arch=x64",
-		"build:electron:x64": "node-pre-gyp rebuild --target=16.17.1 --target_arch=x64 --runtime=electron --dist-url=https://npm.taobao.org/mirrors/electron",
-		"build:electron:ia32": "electron-rebuild rebuild --target=16.17.1 --target_arch=ia32 --runtime=electron --dist-url=https://npm.taobao.org/mirrors/electron"
+    "test": "mocha -R spec --timeout 480000"
   },
   "dependencies": {
+    "@electron/rebuild": "^3.7.2",
     "@mapbox/node-pre-gyp": "^1.0.11",
     "node-addon-api": "^3.0.0"
   },
@@ -76,10 +66,9 @@
     "aws-sdk": "^2.641.0",
     "electron": "^11.2.3",
     "electron-mocha": "^10.0.0",
-    "electron-rebuild": "^1.11.0",
     "eslint": "3.5.0",
     "mocha": "^5.2.0",
-    "node-abi": "^2.19.3",
+    "node-abi": "^4.12.0",
     "node-gyp": "^6.1.0"
   }
 }

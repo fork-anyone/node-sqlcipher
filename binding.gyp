@@ -2,41 +2,46 @@
   "includes": [ "deps/common-sqlite.gypi" ],
   "variables": {
       "sqlite%":"internal",
-      "sqlite_libname%":"sqlite3"
+      "sqlite_libname%":"sqlite3",
+      "module_name": "node_sqlite3",
+      "napi_build_version%": "<!(node -p \"process.versions.napi || '0'\")",
+      "platform": "<!(node -p \"process.platform\")",
+      "module_path": "./lib/binding/napi-v<(napi_build_version)-<(platform)-<(target_arch)",
   },
   "targets": [
     {
       "target_name": "<(module_name)",
       "cflags!": [ "-fno-exceptions" ],
       "cflags_cc!": [ "-fno-exceptions" ],
-      'defines!': [
-				'-std=c++11'
+      "defines!": [
+				"-std=c++11"
 			],
       "xcode_settings": { 
-        'ARCHS': ['x86_64'],
+        "ARCHS": ["x86_64", "arm64"],
+				"VALID_ARCHS": ["arm64", "x86_64"],
         "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
         "CLANG_CXX_LIBRARY": "libc++",
-        "MACOSX_DEPLOYMENT_TARGET": "10.7",
-        'EXCUTABLE_EXTENSION': 'node',
-        'OTHER_CFLAGS': [
-					'-ObjC++',
-					# '-std=c++14'
+        "MACOSX_DEPLOYMENT_TARGET": "10.14",
+        "EXCUTABLE_EXTENSION": "node",
+        "OTHER_CFLAGS": [
+					"-ObjC++",
+					# "-std=c++14"
 				]
       },
       "msvs_settings": {
         "VCCLCompilerTool": { "ExceptionHandling": 1 },
       },
       "include_dirs": [
-        "<!@(node -p \"require('node-addon-api').include\")"],
+        "<!@(node -p \"require(\'node-addon-api\').include\")"],
       "conditions": [
-        ["sqlite != 'internal'", {
+        ["sqlite != \"internal\"", {
             "include_dirs": [
               "<!@(node -p \"require('node-addon-api').include\")", "<(sqlite)/include" ],
             "libraries": [
                "-l<(sqlite_libname)"
             ],
-            "conditions": [ [ "OS=='linux'", {"libraries+":["-Wl,-rpath=<@(sqlite)/lib"]} ] ],
-            "conditions": [ [ "OS!='win'", {"libraries+":["-L<@(sqlite)/lib"]} ] ],
+            "conditions": [ [ "OS==\"linux\"", {"libraries+":["-Wl,-rpath=<@(sqlite)/lib"]} ] ],
+            "conditions": [ [ "OS!=\"win\"", {"libraries+":["-L<@(sqlite)/lib"]} ] ],
             "msvs_settings": {
               "VCLinkerTool": {
                 "AdditionalLibraryDirectories": [
