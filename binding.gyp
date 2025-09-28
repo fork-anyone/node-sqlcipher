@@ -4,7 +4,7 @@
       "sqlite%":"internal",
       "sqlite_libname%":"sqlite3",
       "module_name": "node_sqlite3",
-      "napi_build_version%": "<!(node -p \"process.versions.napi || '0'\")",
+      "napi_build_version%": "6",
       "platform": "<!(node -p \"process.platform\")",
       "module_path": "./lib/binding/napi-v<(napi_build_version)-<(platform)-<(target_arch)",
   },

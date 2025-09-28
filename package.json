@@ -47,11 +47,21 @@
     ".nvmrc",
     "src"
   ],
+  "binary": {
+    "module_name": "node_sqlite3",
+    "module_path": "./lib/binding/napi-v{napi_build_version}-{platform}-{arch}",
+    "remote_path": "./@journeyapps/sqlcipher/v5.3.1/{toolset}/",
+    "package_name": "napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
+    "host": "https://journeyapps-node-binary.s3.amazonaws.com",
+    "napi_versions": [
+      6
+    ]
+  },
   "scripts": {
     "build": "node-gyp rebuild --target=22.3.13 --dist-url https://npm.taobao.org/mirrors/electron",
     "build:ia32": "node-gyp rebuild --target=22.3.13 -target_arch=ia32 --dist-url https://npm.taobao.org/mirrors/electron",
-    "build:x64": "node-gyp rebuild --target=22.3.13 -target_arch=x64 --dist-url https://npm.taobao.org/mirrors/electron",
     "build:node": "node-gyp rebuild --target=16.17.1 --target_arch=x64",
+    "build:x64": "node-gyp rebuild --target=22.3.13 -target_arch=x64 --dist-url https://npm.taobao.org/mirrors/electron",
     "configure": "node-gyp configure --target=22.3.13 --dist-url https://npm.taobao.org/mirrors/electron --python /usr/local/bin/python3 -- -f xcode",
     "publish_to_sfnpm": "npm publish --registry=https://artifactory.sf-express.com/artifactory/api/npm/npm/",
     "pretest": "node test/support/createdb.js",
