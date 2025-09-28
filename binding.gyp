@@ -17,8 +17,8 @@
 				"-std=c++11"
 			],
       "xcode_settings": { 
-        "ARCHS": ["x86_64", "arm64"],
-				"VALID_ARCHS": ["arm64", "x86_64"],
+        "ARCHS": ["x86_64"],
+				"VALID_ARCHS": ["x86_64"],
         "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
         "CLANG_CXX_LIBRARY": "libc++",
         "MACOSX_DEPLOYMENT_TARGET": "10.14",
