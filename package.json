@@ -63,8 +63,6 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.641.0",
-    "electron": "^11.2.3",
-    "electron-mocha": "^10.0.0",
     "eslint": "3.5.0",
     "mocha": "^5.2.0",
     "node-abi": "^4.12.0",
