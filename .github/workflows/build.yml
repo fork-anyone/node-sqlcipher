@@ -19,6 +19,11 @@ jobs:
           node-version: 22.18.0
           architecture: x64
 
+      - name: Prepare OpenSSL for x64
+        run: |
+          lipo -thin x86_64 deps/openssl-macos/libcrypto.a -output deps/openssl-macos/libcrypto-thin.a
+          mv deps/openssl-macos/libcrypto-thin.a deps/openssl-macos/libcrypto.a
+
       - name: Install dependencies
         run: |
           npm install
@@ -48,6 +53,11 @@ jobs:
         with:
           node-version: 22.18.0
           architecture: arm64
+
+      - name: Prepare OpenSSL for arm64
+        run: |
+          lipo -thin arm64 deps/openssl-macos/libcrypto.a -output deps/openssl-macos/libcrypto-thin.a
+          mv deps/openssl-macos/libcrypto-thin.a deps/openssl-macos/libcrypto.a
 
       - name: Install dependencies
         run: |
