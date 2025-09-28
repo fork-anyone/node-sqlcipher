@@ -7,30 +7,23 @@ on:
     branches: [ feature/custom ]
 
 jobs:
-  macos-build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-13-arm64]
-        arch: [x64, arm64]
-        include:
-          - os: macos-13-arm64
-    name: macOS ${{ matrix.os }} (${{ matrix.arch }})
+  
+  macos-x64-build:
+    runs-on: macos-13
+    name: macOS x64 Build
 
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22.18.0
-          architecture: ${{ matrix.arch }}
+          architecture: x64
 
       - name: Install dependencies
         run: |
           npm install
 
       - name: Build
-        env:
-          GYP_ARGS: ${{ matrix.arch == 'arm64' && '--target_arch=arm64' || '' }}
         run: |
           ./node_modules/.bin/node-pre-gyp rebuild
 
@@ -40,7 +33,39 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ runner.os }}-${{ matrix.arch }}-build
+          name: macos-x64-build
+          path: |
+            ./build/
+            ./lib/binding/
+
+  macos-arm64-build:
+    runs-on: macos-13-arm64
+    name: macOS arm64 Build
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.18.0
+          architecture: arm64
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Build
+        env:
+          GYP_ARGS: --target_arch=arm64
+        run: |
+          ./node_modules/.bin/node-pre-gyp rebuild
+
+      - name: Run tests
+        run: npm test
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-arm64-build
           path: |
             ./build/
             ./lib/binding/
