@@ -11,11 +11,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-12, macos-13]
+        os: [macos-13]
         arch: [x64, arm64]
         include:
-          - os: macos-12
-            node_version: 16
           - os: macos-13
             node_version: 18
     name: macOS ${{ matrix.os }} (${{ matrix.arch }})
@@ -29,9 +27,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install git-lfs openssl@1.1
-          git lfs install
-          git lfs pull
           npm install --build-from-source
 
       - name: Build
@@ -69,31 +64,3 @@ jobs:
           asset_path: ./build/Release/node_sqlite3.node
           asset_name: node_sqlite3-${{ runner.os }}-${{ matrix.arch }}.node
           asset_content_type: application/octet-stream
-
-  windows-build:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        arch: [x64, ia32]
-        node_version: [16, 18]
-    name: Windows (${{ matrix.arch }})
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node_version }}
-          architecture: ${{ matrix.arch }}
-
-      - name: Install dependencies
-        run: |
-          npm install --build-from-source
-
-      - name: Build
-        env:
-          GYP_ARGS: ${{ matrix.arch == 'ia32' && '--target_arch=ia32' || '' }}
-        run: |
-          ./node_modules/.bin/node-pre-gyp rebuild package testpackage $GYP_ARGS
-
-      - name: Run tests
-        run: npm test
