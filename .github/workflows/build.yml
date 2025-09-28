@@ -2,9 +2,9 @@ name: CI Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ custom ]
   pull_request:
-    branches: [ main ]
+    branches: [ custom ]
 
 jobs:
   macos-build:
