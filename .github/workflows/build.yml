@@ -15,7 +15,7 @@ jobs:
             runs-on: macos-14
             lipo_arch: x86_64
           - arch: arm64
-            runs-on: macos-14-xlarge   # ← 官方 arm64 runner
+            runs-on: macos-14-xlarge
             lipo_arch: arm64
     runs-on: ${{ matrix.runs-on }}
     name: macOS ${{ matrix.arch }} Build
@@ -46,10 +46,41 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Upload artifacts
+      - name: Upload architecture-specific artifact
         uses: actions/upload-artifact@v4
         with:
           name: macos-${{ matrix.arch }}-build
           path: |
-            ./build/
-            ./lib/binding/
+            ./build/Release/node_sqlite3.node
+
+  # ---------- 新增：Universal Binary ----------
+  macos-universal:
+    needs: [macos-build]
+    runs-on: macos-14
+    name: macOS Universal Binary
+
+    steps:
+      - name: Download x64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-x64-build
+          path: ./x64
+
+      - name: Download arm64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-arm64-build
+          path: ./arm64
+
+      - name: Create universal binary
+        run: |
+          lipo -create \
+            ./x64/node_sqlite3.node \
+            ./arm64/node_sqlite3.node \
+            -output ./node_sqlite3-universal.node
+
+      - name: Upload universal artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-universal
+          path: ./node_sqlite3-universal.node
