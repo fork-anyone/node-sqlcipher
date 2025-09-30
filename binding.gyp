@@ -4,10 +4,11 @@
       "sqlite%":"internal",
       "sqlite_libname%":"sqlite3",
       "module_name": "node_sqlite3",
-      "napi_build_version%": "6",
+      "napi_version": "6",
       "platform": "<!(node -p \"process.platform\")",
-      "module_path": "./lib/binding/napi-v<(napi_build_version)-<(platform)-<(target_arch)",
+      "module_path": "./lib/binding/napi-v<(napi_version)-<(platform)-<(target_arch)",
   },
+  
   "targets": [
     {
       "target_name": "<(module_name)",
@@ -65,7 +66,7 @@
         "src/statement.cc"
       ],
       "defines": [ 
-        "NAPI_VERSION=<(napi_build_version)",
+        "NAPI_VERSION=<(napi_version)",
         "NAPI_DISABLE_CPP_EXCEPTIONS=1" 
       ]
     },
