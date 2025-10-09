@@ -54,7 +54,7 @@
     "package_name": "napi-v{napi_build_version}-{platform}-{arch}.tar.gz",
     "host": "https://journeyapps-node-binary.s3.amazonaws.com",
     "napi_versions": [
-      3
+      6
     ]
   },
   "scripts": {
