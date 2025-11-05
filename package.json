@@ -59,6 +59,7 @@
   },
   "scripts": {
     "build": "node-gyp rebuild --target=22.3.13 --dist-url https://npm.taobao.org/mirrors/electron",
+    "build:arm64": "node-gyp rebuild --target=22.3.13 -target_arch=arm64 --dist-url https://npm.taobao.org/mirrors/electron",
     "build:ia32": "node-gyp rebuild --target=22.3.13 -target_arch=ia32 --dist-url https://npm.taobao.org/mirrors/electron",
     "build:node": "node-gyp rebuild --target=16.17.1 --target_arch=x64",
     "build:x64": "node-gyp rebuild --target=22.3.13 -target_arch=x64 --dist-url https://npm.taobao.org/mirrors/electron",
