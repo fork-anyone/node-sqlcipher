@@ -7,8 +7,8 @@
       "napi_version": "6",
       "platform": "<!(node -p \"process.platform\")",
       "module_path": "./lib/binding/napi-v<(napi_version)-<(platform)-<(target_arch)",
-      "debug%": 0,
-      "debug_output_path%": "./debug",
+      "debug": 0,
+      "debug_output_path": "./debug",
   },
   
   "targets": [
@@ -20,22 +20,38 @@
 				"-std=c++11"
 			],
       "xcode_settings": { 
-        # "ARCHS": ["x86_64"],
-				# "VALID_ARCHS": ["x86_64"],
         "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
         "CLANG_CXX_LIBRARY": "libc++",
         "MACOSX_DEPLOYMENT_TARGET": "10.14",
         "EXCUTABLE_EXTENSION": "node",
         "OTHER_CFLAGS": [
-					"-ObjC++",
-					# "-std=c++14"
-				],
+          "-ObjC++",
+          "-g"
+        ],
         "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym",
         "GCC_GENERATE_DEBUGGING_SYMBOLS": "YES",
-        "GCC_OPTIMIZATION_LEVEL": "<(debug ? 0 : 3)"
+        "GCC_OPTIMIZATION_LEVEL": "0",
+        "OTHER_CFLAGS": ["-O0"],
+        "conditions": [
+          ["debug==1", {
+            
+          }],
+          ["debug!=1", {
+            "GCC_OPTIMIZATION_LEVEL": "3",
+            "OTHER_CFLAGS": ["-O3"]
+          }]
+        ]
       },
       "msvs_settings": {
-        "VCCLCompilerTool": { "ExceptionHandling": 1 },
+        "VCCLCompilerTool": { 
+          "ExceptionHandling": 1,
+          "Optimization": 0,
+          "DebugInformationFormat": 3,
+        },
+        "VCLinkerTool": {
+          "GenerateDebugInformation": "true",  # 始终生成调试信息
+          "ProgramDatabaseFile": "$(OutDir)$(TargetName).pdb"
+        }
       },
       "include_dirs": [
         "<!@(node -p \"require(\'node-addon-api\').include\")"],
