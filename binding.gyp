@@ -7,6 +7,8 @@
       "napi_version": "6",
       "platform": "<!(node -p \"process.platform\")",
       "module_path": "./lib/binding/napi-v<(napi_version)-<(platform)-<(target_arch)",
+      "debug%": 0,
+      "debug_output_path%": "./debug",
   },
   
   "targets": [
@@ -27,7 +29,10 @@
         "OTHER_CFLAGS": [
 					"-ObjC++",
 					# "-std=c++14"
-				]
+				],
+        "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym",
+        "GCC_GENERATE_DEBUGGING_SYMBOLS": "YES",
+        "GCC_OPTIMIZATION_LEVEL": "<(debug ? 0 : 3)"
       },
       "msvs_settings": {
         "VCCLCompilerTool": { "ExceptionHandling": 1 },
@@ -67,7 +72,8 @@
       ],
       "defines": [ 
         "NAPI_VERSION=<(napi_version)",
-        "NAPI_DISABLE_CPP_EXCEPTIONS=1" 
+        "NAPI_DISABLE_CPP_EXCEPTIONS=1",
+        "DEBUG=<(debug)"
       ]
     },
     {
